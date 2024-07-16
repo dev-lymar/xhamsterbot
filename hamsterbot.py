@@ -20,6 +20,10 @@ TOKEN = os.getenv('TOKEN')
 
 
 def get_new_video():
+    """
+    Fetches a new URL from the main API.
+    If the main API request fails, it fetches the URL from the error API.
+    """
     try:
         response = requests.get(URL).json()
     except Exception as error:
@@ -32,11 +36,17 @@ def get_new_video():
 
 
 def new_video(update, context):
+    """
+    Handles the sending of a new video to the user.
+    """
     chat = update.effective_chat
     context.bot.send_photo(chat.id, get_new_video())
 
 
 def wake_up(update, context):
+    """
+    Greets the user with a message and a random video, and sets up a custom keyboard.
+    """
     chat = update.effective_chat
     button = ReplyKeyboardMarkup([['Send me video ;)']], resize_keyboard=True)
     context.bot.send_message(
@@ -51,6 +61,11 @@ def wake_up(update, context):
 
 
 def main():
+    """
+    The basic logic of the bot operation.
+    Initializes the bot, sets up the command and message handlers,
+    and starts polling for updates.
+    """
     updater = Updater(token=TOKEN, use_context=True)
     updater.dispatcher.add_handler(CommandHandler('start', wake_up))
     updater.dispatcher.add_handler(MessageHandler(Filters.text, new_video))
