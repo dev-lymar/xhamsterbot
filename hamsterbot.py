@@ -14,7 +14,13 @@ updater = Updater(token=TOKEN, use_context=True)
 
 
 def get_new_video():
-    response = requests.get(URL).json()
+    try:
+        response = requests.get(URL).json()
+    except Exception as error:
+        print(error)
+        new_url = os.getenv('ERROR_URL')
+        response = requests.get(new_url).json()
+
     random_url = response[0].get('url')
     return random_url
 
