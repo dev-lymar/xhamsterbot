@@ -1,9 +1,10 @@
-import os
 import logging
+import os
+
 import requests
-from telegram.ext import Updater, Filters, MessageHandler, CommandHandler
-from telegram import ReplyKeyboardMarkup
 from dotenv import load_dotenv
+from telegram import ReplyKeyboardMarkup
+from telegram.ext import CommandHandler, Filters, MessageHandler, Updater
 
 load_dotenv()
 
