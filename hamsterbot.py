@@ -10,8 +10,6 @@ URL = os.getenv('URL')
 
 TOKEN = os.getenv('TOKEN')
 
-updater = Updater(token=TOKEN, use_context=True)
-
 
 def get_new_video():
     try:
@@ -44,9 +42,15 @@ def wake_up(update, context):
     context.bot.send_message(chat_id=chat.id, text='Yeah,  it\'s kitties, and you wanted something else?')
 
 
-updater.dispatcher.add_handler(CommandHandler('start', wake_up))
-updater.dispatcher.add_handler(MessageHandler(Filters.text, new_video))
+def main():
+    updater = Updater(token=TOKEN, use_context=True)
+    updater.dispatcher.add_handler(CommandHandler('start', wake_up))
+    updater.dispatcher.add_handler(MessageHandler(Filters.text, new_video))
 
-updater.start_polling()
+    updater.start_polling()
 
-updater.idle()
+    updater.idle()
+
+
+if __name__ == '__main__':
+    main()
