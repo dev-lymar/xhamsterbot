@@ -1,10 +1,17 @@
 import os
+import logging
 import requests
 from telegram.ext import Updater, Filters, MessageHandler, CommandHandler
 from telegram import ReplyKeyboardMarkup
 from dotenv import load_dotenv
 
 load_dotenv()
+
+logging.basicConfig(
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+    filename='hamsterbot.log',
+    level=logging.INFO,
+)
 
 URL = os.getenv('URL')
 
@@ -15,7 +22,7 @@ def get_new_video():
     try:
         response = requests.get(URL).json()
     except Exception as error:
-        print(error)
+        logging.error(f'error during request to the main API: {error}')
         new_url = os.getenv('ERROR_URL')
         response = requests.get(new_url).json()
 
